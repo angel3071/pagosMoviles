@@ -1,20 +1,27 @@
 package com.bpm.pagosmoviles;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import controlador.JsonCont;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -147,7 +154,7 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView.setText("Por favor espere");
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+			mAuthTask.execute("","","");
 		}
 	}
 
@@ -196,46 +203,72 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<String, Void, String>{
 		@Override
-		protected Boolean doInBackground(Void... params) {
+		protected String doInBackground(String... urls) {
 			// TODO: attempt authentication against a network service.
 
 			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
+				return new JsonCont().readJSONFeed(urls[0]);
+			} catch (Exception e) {
+				return null;
 			}
 
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
-			return true;
+//			for (String credential : DUMMY_CREDENTIALS) {
+//				String[] pieces = credential.split(":");
+//				if (pieces[0].equals(mEmail)) {
+//					// Account exists, return true if the password matches.
+//					return pieces[1].equals(mPassword);
+//				}
+//			}
+//
+//			// TODO: register the new account here.
+//			return true;
 		}
 
 		@Override
-		protected void onPostExecute(final Boolean success) {
+		protected void onPostExecute(String result) {
 			mAuthTask = null;
 			showProgress(false);
-
-			if (success) {
-				
-				
-				Intent i = new Intent(getApplicationContext(), Principal.class);
-				startActivity(i);
-				finish();
-			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
-			}
+            	
+            	try{
+	                JSONArray array = new JSONArray(result);
+	                
+	                for(int i=0;i<array.length(); i++){
+	                	
+	                	JSONObject b = array.getJSONObject(i);
+	                	semaforos[i] = b.getString("Descripcion") + "%" + b.getString("Valor")+ "%" +
+	                	b.getString("Base")+"%" + b.getString("Meta") + "%" +b.getString("bml");
+	                	semaforos1[i] = b.getString("IdIndicador") +  "%" + b.getString("bml")
+	                			+ "%" + b.getString("Descripcion");
+	                	
+	                	sistema =  b.getString("Sistema");
+	                	
+	                }
+	               
+	//                semaforos1 = semaforos;
+	                Dialog d = crearDialogoSemaforos(semaforos, sistema);
+	                d.show();
+	                
+	            } catch (Exception e) {
+	            	
+	                Log.d("ReadWeatherJSONFeedTask", e.getLocalizedMessage());
+	                Toast.makeText(getBaseContext(), "Imposible conectarse a la red",Toast.LENGTH_LONG).show();
+	                
+	            }          
+        
+			
+//			if (success) {
+//				
+//				
+//				Intent i = new Intent(getApplicationContext(), Principal.class);
+//				startActivity(i);
+//				finish();
+//			} else {
+//				mPasswordView
+//						.setError(getString(R.string.error_incorrect_password));
+//				mPasswordView.requestFocus();
+//			}
 		}
 
 		@Override
