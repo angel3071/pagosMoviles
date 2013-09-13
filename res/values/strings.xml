@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sistema de Pagos Móviles</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_principal">Principal</string>
+    <string name="title_section1">Clientes</string>
+    <string name="title_section2">Facturas</string>
+    <string name="title_section3">Artículos</string>
+    <string name="title_activity_clientes">Clientes</string>
+
+</resources>
