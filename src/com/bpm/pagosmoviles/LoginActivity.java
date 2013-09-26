@@ -1,14 +1,9 @@
 package com.bpm.pagosmoviles;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import controlador.JsonCont;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,6 +50,8 @@ public class LoginActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+
+	public boolean login;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,8 +150,17 @@ public class LoginActivity extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText("Por favor espere");
 			showProgress(true);
+			//Aquí se pasa la información al webservice para el logueo
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute("","","");
+			//Esto lo debe hacer la asincrona
+			this.login = true;
+			if(this.login){
+				
+				Intent i = new Intent(getApplicationContext(), Principal.class);
+				startActivity(i);
+				finish();
+			}
 		}
 	}
 
@@ -232,27 +238,27 @@ public class LoginActivity extends Activity {
 			showProgress(false);
             	
             	try{
-	                JSONArray array = new JSONArray(result);
+	                //JSONArray array = new JSONArray(result);
 	                
-	                for(int i=0;i<array.length(); i++){
-	                	
-	                	JSONObject b = array.getJSONObject(i);
-	                	semaforos[i] = b.getString("Descripcion") + "%" + b.getString("Valor")+ "%" +
-	                	b.getString("Base")+"%" + b.getString("Meta") + "%" +b.getString("bml");
-	                	semaforos1[i] = b.getString("IdIndicador") +  "%" + b.getString("bml")
-	                			+ "%" + b.getString("Descripcion");
-	                	
-	                	sistema =  b.getString("Sistema");
-	                	
-	                }
-	               
-	//                semaforos1 = semaforos;
-	                Dialog d = crearDialogoSemaforos(semaforos, sistema);
-	                d.show();
+//	                for(int i=0;i<array.length(); i++){
+//	                	
+//	                	JSONObject b = array.getJSONObject(i);
+//	                	semaforos[i] = b.getString("Descripcion") + "%" + b.getString("Valor")+ "%" +
+//	                	b.getString("Base")+"%" + b.getString("Meta") + "%" +b.getString("bml");
+//	                	semaforos1[i] = b.getString("IdIndicador") +  "%" + b.getString("bml")
+//	                			+ "%" + b.getString("Descripcion");
+//	                	
+//	                	sistema =  b.getString("Sistema");
+//	                	
+//	                }
+//	               
+//	//                semaforos1 = semaforos;
+//	                Dialog d = crearDialogoSemaforos(semaforos, sistema);
+//	                d.show();
 	                
 	            } catch (Exception e) {
 	            	
-	                Log.d("ReadWeatherJSONFeedTask", e.getLocalizedMessage());
+	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());
 	                Toast.makeText(getBaseContext(), "Imposible conectarse a la red",Toast.LENGTH_LONG).show();
 	                
 	            }          
