@@ -1,5 +1,6 @@
 package com.bpm.pagosmoviles;
 
+import org.json.JSONObject;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -18,33 +19,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * Activity which displays a login screen to the user, offering registration as
- * well.
- */
 public class LoginActivity extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
-
-	/**
-	 * The default email to populate the email field with.
-	 */
-	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
-
-	/**
-	 * Keep track of the login task to ensure we can cancel it if requested.
-	 */
+	
 	private UserLoginTask mAuthTask = null;
-
-	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
 
-	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	private View mLoginFormView;
@@ -58,15 +38,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
-
-		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
-		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
-		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
@@ -87,6 +62,10 @@ public class LoginActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 						attemptLogin();
+						
+						mAuthTask = new UserLoginTask();
+						mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/login.php?email="+mEmailView.getText().toString()+
+								                                                            "&password="+mPasswordView.getText().toString());
 					}
 				});
 	}
@@ -98,15 +77,8 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	/**
-	 * Attempts to sign in or register the account specified by the login form.
-	 * If there are form errors (invalid email, missing fields, etc.), the
-	 * errors are presented and no actual login attempt is made.
-	 */
 	public void attemptLogin() {
-		if (mAuthTask != null) {
-			return;
-		}
+		if (mAuthTask != null) { return; }
 
 		// Reset errors.
 		mEmailView.setError(null);
@@ -121,10 +93,6 @@ public class LoginActivity extends Activity {
 
 		// Check for a valid password.
 		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError("Este campo es Obligatorio");
-			focusView = mPasswordView;
-			cancel = true;
-		} else if (mPassword.length() < 4) {
 			mPasswordView.setError("Este campo es Obligatorio");
 			focusView = mPasswordView;
 			cancel = true;
@@ -150,23 +118,9 @@ public class LoginActivity extends Activity {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText("Por favor espere");
 			showProgress(true);
-			//Aquí se pasa la información al webservice para el logueo
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute("","","");
-			//Esto lo debe hacer la asincrona
-			this.login = true;
-			if(this.login){
-				
-				Intent i = new Intent(getApplicationContext(), Principal.class);
-				startActivity(i);
-				finish();
-			}
 		}
 	}
 
-	/**
-	 * Shows the progress UI and hides the login form.
-	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	private void showProgress(final boolean show) {
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -205,76 +159,38 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	/**
-	 * Represents an asynchronous login/registration task used to authenticate
-	 * the user.
-	 */
 	public class UserLoginTask extends AsyncTask<String, Void, String>{
 		@Override
 		protected String doInBackground(String... urls) {
-			// TODO: attempt authentication against a network service.
-
 			try {
 				return new JsonCont().readJSONFeed(urls[0]);
 			} catch (Exception e) {
 				return null;
 			}
-
-//			for (String credential : DUMMY_CREDENTIALS) {
-//				String[] pieces = credential.split(":");
-//				if (pieces[0].equals(mEmail)) {
-//					// Account exists, return true if the password matches.
-//					return pieces[1].equals(mPassword);
-//				}
-//			}
-//
-//			// TODO: register the new account here.
-//			return true;
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			mAuthTask = null;
 			showProgress(false);
-            	
             	try{
-	                //JSONArray array = new JSONArray(result);
-	                
-//	                for(int i=0;i<array.length(); i++){
-//	                	
-//	                	JSONObject b = array.getJSONObject(i);
-//	                	semaforos[i] = b.getString("Descripcion") + "%" + b.getString("Valor")+ "%" +
-//	                	b.getString("Base")+"%" + b.getString("Meta") + "%" +b.getString("bml");
-//	                	semaforos1[i] = b.getString("IdIndicador") +  "%" + b.getString("bml")
-//	                			+ "%" + b.getString("Descripcion");
-//	                	
-//	                	sistema =  b.getString("Sistema");
-//	                	
-//	                }
-//	               
-//	//                semaforos1 = semaforos;
-//	                Dialog d = crearDialogoSemaforos(semaforos, sistema);
-//	                d.show();
-	                
+	                if(!result.equals("false")) {
+	                	JSONObject jObject  = new JSONObject(result);
+	                	String usuario = jObject.getString("email");
+	                	Log.w("VALOR",  usuario);
+		                
+		                Intent i = new Intent(getApplicationContext(), Principal.class);
+		                i.putExtra("usuario", usuario);
+						startActivity(i);
+						finish();
+	                }
+	                else {
+	                	Toast.makeText(getBaseContext(), "Credenciales inv�lidas",Toast.LENGTH_LONG).show();
+	                }
 	            } catch (Exception e) {
-	            	
 	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());
 	                Toast.makeText(getBaseContext(), "Imposible conectarse a la red",Toast.LENGTH_LONG).show();
-	                
 	            }          
-        
-			
-//			if (success) {
-//				
-//				
-//				Intent i = new Intent(getApplicationContext(), Principal.class);
-//				startActivity(i);
-//				finish();
-//			} else {
-//				mPasswordView
-//						.setError(getString(R.string.error_incorrect_password));
-//				mPasswordView.requestFocus();
-//			}
 		}
 
 		@Override
