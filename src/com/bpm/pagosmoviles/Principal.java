@@ -8,16 +8,7 @@ import android.support.v4.view.ViewPager;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class Principal extends FragmentActivity  {
-
-	/**
-	 * The pager widget, which handles animation and allows swiping horizontally
-	 * to access previous and next pages.
-	 */
 	ViewPager pager = null;
-
-	/**
-	 * The pager adapter, which provides the pages to the view pager widget.
-	 */
 	MyFragmentPagerAdapter pagerAdapter;
 
 	@Override
@@ -35,7 +26,7 @@ public class Principal extends FragmentActivity  {
 		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(
 				getSupportFragmentManager());
 		adapter.addFragment(ClientesFragment.newInstance(Color.BLACK, 1));
-		adapter.addFragment(ProductosFragment.newInstance(Color.BLACK, 1));
+		adapter.addFragment(ProductosFragment.newInstance(Color.BLACK, 2));
 		
 		this.pager.setAdapter(adapter);
 
@@ -43,18 +34,15 @@ public class Principal extends FragmentActivity  {
 		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		titleIndicator.setBackgroundColor(Color.BLACK);
 		titleIndicator.setViewPager(pager);
-
 	}
 
 	@Override
 	public void onBackPressed() {
-
 		// Return to previous page when we press back button
 		if (this.pager.getCurrentItem() == 0)
 			super.onBackPressed();
 		else
 			this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
-
 	}
 }
 

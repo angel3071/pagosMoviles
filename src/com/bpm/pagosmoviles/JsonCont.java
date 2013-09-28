@@ -17,6 +17,7 @@ public class JsonCont {
 
 	
 	   public String readJSONFeed(String URL) {
+		   Log.w("URL", URL);
 	        StringBuilder stringBuilder = new StringBuilder();
 	        HttpClient httpClient = new DefaultHttpClient();
 	        HttpGet httpGet = new HttpGet(URL);
@@ -27,13 +28,15 @@ public class JsonCont {
 	            if (statusCode == 200) {
 	                HttpEntity entity = response.getEntity();
 	                InputStream inputStream = entity.getContent();
-	                BufferedReader reader = new BufferedReader(
-	                        new InputStreamReader(inputStream));
+	                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 	                String line; int i = 0;
-	                while ((line = reader.readLine()) != null) {
-	                	if (i!=0)
-	                    stringBuilder.append(line);
-	                	i++;
+	                line = reader.readLine();
+	                
+	                while (line != null) {
+	                	//if (i!=0)
+	                	stringBuilder.append(line);
+	                	//i++;
+	                	line = reader.readLine();
 	                }
 	                inputStream.close();
 	            } else {
@@ -42,11 +45,7 @@ public class JsonCont {
 	        } catch (Exception e) {
 	            Log.d("readJSONFeed", e.getLocalizedMessage());
 	        }        
-	        return stringBuilder.toString().replaceFirst("<string xmlns=\"siie\">", "").replaceFirst("</string>", "");
-	    }                                                 
-	
-	   
-	 
-	   
-	   
+	        //return stringBuilder.toString().replaceFirst("<string xmlns=\"siie\">", "").replaceFirst("</string>", "");
+	        return stringBuilder.toString();
+	    }                                                    
 }

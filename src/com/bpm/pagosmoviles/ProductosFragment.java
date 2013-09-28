@@ -103,7 +103,7 @@ public class ProductosFragment extends Fragment {
 
 		// Change the background color
 //		rootView.setBackgroundColor(this.color);
-		rootView.setBackgroundColor(Color.WHITE);
+//		rootView.setBackgroundColor(Color.WHITE);
 		return rootView;
 
 	}
@@ -111,6 +111,6 @@ public class ProductosFragment extends Fragment {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Clientes";
+		return "Productos (" + productos.size() + ")";
 	}
 }

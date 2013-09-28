@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 
-
 public class ClientesFragment extends Fragment {
 
 	/**
@@ -40,7 +39,6 @@ public class ClientesFragment extends Fragment {
 	 * @return a new page
 	 */
 	public static ClientesFragment newInstance(int color, int index) {
-
 		// Instantiate a new fragment
 		ClientesFragment fragment = new ClientesFragment();
 
@@ -52,7 +50,6 @@ public class ClientesFragment extends Fragment {
 		fragment.setRetainInstance(true);
 
 		return fragment;
-
 	}
 
 	@Override
@@ -60,39 +57,28 @@ public class ClientesFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		// Load parameters when the initial creation of the fragment is done
-		this.color = (getArguments() != null) ? getArguments().getInt(
-				BACKGROUND_COLOR) : Color.GRAY;
-		this.index = (getArguments() != null) ? getArguments().getInt(INDEX)
-				: -1;
-
+		this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : Color.BLACK;
+		this.index = (getArguments() != null) ? getArguments().getInt(INDEX) : -1;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.fragment_clientes, container, false);
-		
-		
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_clientes, container, false);
+				
 		clientes.add(new Cliente("Pedro",R.drawable.michael200));
 		clientes.add(new Cliente("Pablo",R.drawable.ema200));
 		clientes.add(new Cliente("Federico",R.drawable.johnlennon200));
 		clientes.add(new Cliente("Angel",R.drawable.ritchie200));
 		clientes.add(new Cliente("Claudia",R.drawable.halle200));
 
-		
-		
-		
 		GridView gv = (GridView) rootView.findViewById(R.id.grid_view);
 		gv.setAdapter(new MyAdapter(getActivity(),clientes));
-		gv.setOnItemClickListener(new OnItemClickListener() {@Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                    int position, long id) {
+		gv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-            	int a =1;
-            	
-            	
+            	int a =1;	
             }
         });
 		
@@ -103,14 +89,12 @@ public class ClientesFragment extends Fragment {
 
 		// Change the background color
 //		rootView.setBackgroundColor(this.color);
-		rootView.setBackgroundColor(Color.WHITE);
+		//rootView.setBackgroundColor(Color.BLACK);
 		return rootView;
-
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "Clientes";
+		return "Clientes (" + clientes.size() + ")";
 	}
 }
