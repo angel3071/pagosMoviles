@@ -14,8 +14,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.util.Log;
 
 public class JsonCont {
-
-	
 	   public String readJSONFeed(String URL) {
 		   Log.w("URL", URL);
 	        StringBuilder stringBuilder = new StringBuilder();

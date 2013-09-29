@@ -15,23 +15,17 @@ import android.widget.TextView;
 public class MyAdapter extends BaseAdapter {
     private List<Item> items = new ArrayList<Item>();
     private LayoutInflater inflater;
+    private Context mContext;
 
     public MyAdapter(Context context, ArrayList elementos) {
         inflater = LayoutInflater.from(context);
+        mContext = context;
 
         for (ElementoGrid elemento : (ArrayList<ElementoGrid>)elementos) {
         	items.add(new Item(elemento.nombre, elemento.pic));
 		}
-        
-        
-       
-   
-
     }
     
-
-    
-
 	@Override
     public int getCount() {
         return items.size();

@@ -43,8 +43,7 @@ public class LoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
+					public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 						if (id == R.id.login || id == EditorInfo.IME_NULL) {
 							attemptLogin();
 							return true;
@@ -61,8 +60,7 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						attemptLogin();
-						
+						attemptLogin();						
 						mAuthTask = new UserLoginTask();
 						mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/login.php?email="+mEmailView.getText().toString()+
 								                                                            "&password="+mPasswordView.getText().toString());
@@ -177,7 +175,6 @@ public class LoginActivity extends Activity {
 	                if(!result.equals("false")) {
 	                	JSONObject jObject  = new JSONObject(result);
 	                	String usuario = jObject.getString("email");
-	                	Log.w("VALOR",  usuario);
 		                
 		                Intent i = new Intent(getApplicationContext(), Principal.class);
 		                i.putExtra("usuario", usuario);
