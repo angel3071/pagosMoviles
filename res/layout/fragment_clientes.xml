@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Buscar" />
-
+    
     <GridView
-        android:id="@+id/grid_view"
+        android:id="@+id/grid_view_clientes"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:verticalSpacing="0dp"

@@ -18,21 +18,7 @@ public class FragmentPagerViewAdapter extends FragmentPagerAdapter {
 
 	// List of fragments which are going to set in the view pager widget
     List<Fragment> fragments;
- 
-    /**
-     * Constructor
-     * 
-     * @param fm
-     *            interface for interacting with Fragment objects inside of an
-     *            Activity
-     */
-    
-    /**
-     * Add a new fragment in the list.
-     * 
-     * @param fragment
-     *            a new fragment
-     */
+
     public void addFragment(Fragment fragment) {
         this.fragments.add(fragment);
     }

@@ -27,7 +27,8 @@ public class JsonCont {
 	                HttpEntity entity = response.getEntity();
 	                InputStream inputStream = entity.getContent();
 	                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-	                String line; int i = 0;
+	                String line; 
+	                //int i = 0;
 	                line = reader.readLine();
 	                
 	                while (line != null) {

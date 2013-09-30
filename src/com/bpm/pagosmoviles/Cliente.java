@@ -6,7 +6,4 @@ public class Cliente extends ElementoGrid {
 		super(nombre, pic);
 		// TODO Auto-generated constructor stub
 	}
-
-	
-
 }

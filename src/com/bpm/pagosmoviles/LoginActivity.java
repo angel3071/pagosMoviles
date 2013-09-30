@@ -179,7 +179,7 @@ public class LoginActivity extends Activity {
 		                Intent i = new Intent(getApplicationContext(), Principal.class);
 		                i.putExtra("usuario", usuario);
 						startActivity(i);
-						finish();
+						//finish();
 	                }
 	                else {
 	                	Toast.makeText(getBaseContext(), "Credenciales inválidas",Toast.LENGTH_LONG).show();

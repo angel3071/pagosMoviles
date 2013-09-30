@@ -30,15 +30,11 @@ public class ClientesActivity extends Activity {
 		
 		
 		
-		GridView gv = (GridView) findViewById(R.id.grid_view);
+		GridView gv = (GridView) findViewById(R.id.grid_view_clientes);
 		gv.setAdapter(new MyAdapter(this,clientes));
 		gv.setOnItemClickListener(new OnItemClickListener() {@Override
             public void onItemClick(AdapterView<?> parent, View v,
-                    int position, long id) {
-
-            	int a =1;
-            	
-            	
+                    int position, long id) {	
             }
         });
 	}

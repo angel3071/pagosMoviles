@@ -17,7 +17,7 @@ public class MyAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context mContext;
 
-    public MyAdapter(Context context, ArrayList elementos) {
+	public MyAdapter(Context context, ArrayList elementos) {
         inflater = LayoutInflater.from(context);
         mContext = context;
 
