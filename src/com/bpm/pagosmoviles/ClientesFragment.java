@@ -66,7 +66,7 @@ public class ClientesFragment extends Fragment {
 				gv.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 		            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		            	Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_LONG).show();
+		            	Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_LONG).show();		            	
 		            }
 		        });
 			} catch(Exception e) {

@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 	
 	private UserLoginTask mAuthTask = null;
-	private String mEmail;
+	public static String mEmail;
 	private String mPassword;
 
 	private EditText mEmailView;
@@ -161,7 +161,9 @@ public class LoginActivity extends Activity {
 		@Override
 		protected String doInBackground(String... urls) {
 			try {
-				return new JsonCont().readJSONFeed(urls[0]);
+				String ret = new JsonCont().readJSONFeed(urls[0]);
+				Log.w("RETURN", ret);
+				return ret;
 			} catch (Exception e) {
 				return null;
 			}
@@ -179,7 +181,6 @@ public class LoginActivity extends Activity {
 		                Intent i = new Intent(getApplicationContext(), Principal.class);
 		                i.putExtra("usuario", usuario);
 						startActivity(i);
-						//finish();
 	                }
 	                else {
 	                	Toast.makeText(getBaseContext(), "Credenciales inválidas",Toast.LENGTH_LONG).show();

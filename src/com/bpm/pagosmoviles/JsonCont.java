@@ -28,13 +28,9 @@ public class JsonCont {
 	                InputStream inputStream = entity.getContent();
 	                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 	                String line; 
-	                //int i = 0;
 	                line = reader.readLine();
-	                
 	                while (line != null) {
-	                	//if (i!=0)
 	                	stringBuilder.append(line);
-	                	//i++;
 	                	line = reader.readLine();
 	                }
 	                inputStream.close();
@@ -42,9 +38,9 @@ public class JsonCont {
 	                Log.d("JSON", "Failed to download file");
 	            }
 	        } catch (Exception e) {
-	            Log.d("readJSONFeed", e.getLocalizedMessage());
+	            Log.d("ReadJSONFeed", e.getLocalizedMessage());
 	        }        
-	        //return stringBuilder.toString().replaceFirst("<string xmlns=\"siie\">", "").replaceFirst("</string>", "");
+	        
 	        return stringBuilder.toString();
 	    }                                                    
 }
