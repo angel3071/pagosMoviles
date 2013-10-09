@@ -8,6 +8,7 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="16" />
+    
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -31,13 +32,13 @@
             android:name="com.bpm.pagosmoviles.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateHidden" >
+
         </activity>
         <activity
             android:name="com.bpm.pagosmoviles.Principal"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_principal" 
-            android:theme="@android:style/Theme.NoTitleBar"
-		>            
+            android:theme="@android:style/Theme.NoTitleBar"		>            
         </activity>
         <activity
             android:name="com.bpm.pagosmoviles.ClientesActivity"

@@ -2,6 +2,7 @@ package com.bpm.pagosmoviles;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,28 +14,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Registro extends Activity {
-	
 	private UserLoginTask mAuthTask = null;
+	private ProgressDialog pd = null;
 	
-	private EditText aPaternoView;
-	private EditText aMaternoView;
-	private EditText nombresView;
-	private EditText ciudadView;
-	private EditText estadoView;
-	private EditText paisView;
-	private EditText sectorIdustrialView;
-	private EditText giroEmpresaView;
-	private EditText descripcionView;
-	
-	private String aPaterno;
-	private String aMaterno;
-	private String nombres;
-	private String ciudad;
-	private String estado;
-	private String pais;
-	private String sectorIdustrial;
-	private String giroEmpresa;
-	private String descripcion;
+	private EditText aPaternoView, aMaternoView, nombresView, ciudadView, estadoView;
+	private EditText paisView, sectorIdustrialView,giroEmpresaView, descripcionView;
+	private String aPaterno, aMaterno, nombres, ciudad;
+	private String estado, pais, sectorIdustrial, giroEmpresa, descripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +64,12 @@ public class Registro extends Activity {
 				giroEmpresa = eliminaEspacios(giroEmpresaView.getText().toString());
 				descripcion = eliminaEspacios(descripcionView.getText().toString());
 				
-				String url = "http://bpmcart.com/bpmpayment/php/modelo/editUser.php?ap=" + aPaterno +
+				String url = "http://bpmcart.com/bpmpayment/php/modelo/updateUser.php?ap=" + aPaterno +
 						     "&am=" + aMaterno + "&names=" + nombres + "&city=" + ciudad + "&state=" + estado +
 						     "&pais=" + pais + "&si=" + sectorIdustrial + "&ge=" + giroEmpresa + "&desc=" + descripcion +
 						     "&email=q@q";
 				
+				Registro.this.pd = ProgressDialog.show(Registro.this, "Procesando...", "Registrando datos...", true, false);
 				mAuthTask = new UserLoginTask();
 				mAuthTask.execute(url);
 			}
@@ -114,14 +101,10 @@ public class Registro extends Activity {
 		protected void onPostExecute(String result) {
 			mAuthTask = null;
             	try{
-	                if(!result.equals("false")) {
-	                	/*JSONObject jObject  = new JSONObject(result);
-	                	String usuario = jObject.getString("email");
-		                
-		                Intent i = new Intent(getApplicationContext(), Principal.class);
-		                i.putExtra("usuario", usuario);
-						startActivity(i);
-						//finish();*/
+	                if(!result.equals("false")) {	                	
+	                	if (Registro.this.pd != null) {
+		   	                Registro.this.pd.dismiss();
+		   	            }
 	                	
 	                	Toast.makeText(getBaseContext(), "Actualización satisfactoria", Toast.LENGTH_SHORT).show();
 	                }
