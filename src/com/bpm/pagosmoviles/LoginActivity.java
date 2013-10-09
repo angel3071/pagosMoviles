@@ -5,7 +5,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,11 +35,29 @@ public class LoginActivity extends Activity {
 	private TextView mLoginStatusMessageView;
 
 	public boolean login;
+	public String storedMail;
+	public String storedPass;
+	public String pass;
+	public String email;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		SharedPreferences storedPreferences = getSharedPreferences("datos",Context.MODE_PRIVATE);
+		storedMail = storedPreferences.getString("mail", "");
+		storedPass = storedPreferences.getString("pass", "");
+		
+			
+		
+		if(!storedMail.equals("") && !storedPass.equals("")){
+			pass = storedPass;
+			email = storedMail;
+			mAuthTask = new UserLoginTask();
+			mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/login.php?email="+storedMail+
+					                                                            "&password="+storedPass);
+		}
+		
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.email);
 
@@ -60,10 +81,12 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						attemptLogin();						
+						attemptLogin();					
+						pass = (storedPass.equals(""))? mPasswordView.getText().toString():storedPass;
+						email = (storedMail.equals(""))? mEmailView.getText().toString():storedMail;
 						mAuthTask = new UserLoginTask();
-						mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/login.php?email="+mEmailView.getText().toString()+
-								                                                            "&password="+mPasswordView.getText().toString());
+						mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/login.php?email="+email+
+								                                                            "&password="+pass);
 					}
 				});
 	}
@@ -180,10 +203,20 @@ public class LoginActivity extends Activity {
 		                
 		                Intent i = new Intent(getApplicationContext(), Principal.class);
 		                i.putExtra("usuario", usuario);
+		                
+		                SharedPreferences storedPreferences = getSharedPreferences("datos",Context.MODE_PRIVATE);
+		                Editor editor = storedPreferences.edit();
+		                editor.putString("mail", email);
+		                editor.putString("pass", pass);
+		                editor.commit();
+		                
 						startActivity(i);
+						showProgress(false);
+						
+						finish();
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inv·lidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Credenciales inv√°lidas",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (Exception e) {
 	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());
