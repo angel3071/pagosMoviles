@@ -2,6 +2,8 @@ package com.bpm.pagosmoviles;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class Principal extends FragmentActivity  {
+	private ProgressDialog pd = null;
 	public ViewPager pager = null;
 	MyFragmentPagerAdapter pagerAdapter;
 	JSONObject jObjectClientes = null;
@@ -25,6 +28,8 @@ public class Principal extends FragmentActivity  {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_principal);
+		
+		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando información...", true, false);
 
 		this.pager = (ViewPager) this.findViewById(R.id.pager);
 		Intent intent = getIntent();
@@ -72,6 +77,10 @@ public class Principal extends FragmentActivity  {
 		            		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		            		titleIndicator.setBackgroundColor(Color.BLACK);
 		            		titleIndicator.setViewPager(pager);
+		            		
+		            		if (Principal.this.pd != null) {
+		            			Principal.this.pd.dismiss();
+			   	            }
 	                	}
 	                }
 	                else {

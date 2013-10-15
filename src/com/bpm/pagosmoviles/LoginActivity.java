@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	
 	private UserLoginTask mAuthTask = null;
 	public static String mEmail;
 	private String mPassword;
@@ -200,6 +199,8 @@ public class LoginActivity extends Activity {
 	                if(!result.equals("false")) {
 	                	JSONObject jObject  = new JSONObject(result);
 	                	String usuario = jObject.getString("email");
+	                	
+	                	Log.w("USUARIO", usuario);
 		                
 		                Intent i = new Intent(getApplicationContext(), Principal.class);
 		                i.putExtra("usuario", usuario);
@@ -216,7 +217,7 @@ public class LoginActivity extends Activity {
 						finish();
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inv√°lidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Credenciales inv·lidas",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (Exception e) {
 	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());

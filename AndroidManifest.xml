@@ -16,37 +16,47 @@
         android:allowBackup="true"
         android:icon="@drawable/bpm"
         android:label="@string/app_name"
-       
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.bpm.pagosmoviles.Registro"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden" >
-            
         </activity>
+        
         <activity
             android:name="com.bpm.pagosmoviles.LoginActivity"
             android:label="@string/title_activity_login"
-            
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
+        
         <activity
             android:name="com.bpm.pagosmoviles.Principal"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_principal" 
-            android:theme="@android:style/Theme.NoTitleBar"		>            
+            android:label="@string/title_activity_principal" >            
         </activity>
+        
         <activity
             android:name="com.bpm.pagosmoviles.ClientesActivity"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_clientes" >
         </activity>
+        
+        <activity
+            android:name="com.bpm.pagosmoviles.RegistrarProducto"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_registro_producto" >
+        </activity>
+        
+        <activity
+            android:name="com.bpm.pagosmoviles.RegistrarCliente"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_registro_cliente" >
+                        <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
-
 </manifest>

@@ -9,5 +9,7 @@
     <string name="title_section2">Facturas</string>
     <string name="title_section3">Artículos</string>
     <string name="title_activity_clientes">Clientes</string>
+    <string name="title_activity_registro_producto">Agregar Producto</string>
+    <string name="title_activity_registro_cliente">Agregar Cliente</string>
 
 </resources>

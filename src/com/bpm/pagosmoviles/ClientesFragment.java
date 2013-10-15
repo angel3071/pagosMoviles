@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +26,7 @@ public class ClientesFragment extends Fragment {
 	static JSONArray clients;
 	private static final String BACKGROUND_COLOR = "color";
 	private static final String INDEX = "index";
+	private String usuario;
 
 	//private int color, index;
 
@@ -45,6 +51,11 @@ public class ClientesFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		setHasOptionsMenu(true);
+		
+		Intent intent = getActivity().getIntent();
+        usuario = intent.getStringExtra("usuario");
+
 		// Load parameters when the initial creation of the fragment is done
 		//this.color = (getArguments() != null) ? getArguments().getInt(BACKGROUND_COLOR) : Color.BLACK;
 		//this.index = (getArguments() != null) ? getArguments().getInt(INDEX) : -1;
@@ -78,5 +89,26 @@ public class ClientesFragment extends Fragment {
 	@Override
 	public String toString() {
 		return "Clientes";
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	    super.onCreateOptionsMenu(menu, inflater);
+	    getActivity().getMenuInflater().inflate(R.menu.clientes, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+	    case R.id.add_cliente:            
+            Intent i = new Intent(getActivity().getBaseContext(), RegistrarCliente.class);
+            i.putExtra("usuario", usuario);
+			startActivity(i);
+            return true;
+	    default:
+	        break;
+	    }
+
+	    return false;
 	}
 }

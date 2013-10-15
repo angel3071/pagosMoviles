@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+	tools:context=".MainActivity" >
+	
+	<TextView
+	android:id="@+id/textView_enter_name"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_alignParentTop="true"
+	android:layout_marginLeft="20dp"
+	android:layout_marginTop="15dp"
+	android:textSize="18sp"
+	android:text="Nombre del Producto" />
+	
+	<EditText
+	    android:id="@+id/productName"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textView_enter_name"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:layout_marginTop="5dp"
+	    android:ems="10"
+	    android:inputType="text"
+	    android:textSize="17sp" >
+	
+	<requestFocus />
+	</EditText>
+	
+	<TextView
+	android:id="@+id/textView_enter_username"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_below="@+id/productName"
+	android:layout_marginLeft="20dp"
+	android:layout_marginTop="15dp"
+	android:textSize="18sp"
+	android:text="Precio" />
+	
+	<EditText
+	    android:id="@+id/productPrice"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textView_enter_username"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:layout_marginTop="5dp"
+	    android:ems="10"
+	    android:inputType="numberSigned"
+	    android:textSize="17sp" >
+	
+	</EditText>
+	
+	<TextView
+	android:id="@+id/textView_enter_password"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_below="@+id/productPrice"
+	android:layout_marginLeft="20dp"
+	android:layout_marginTop="15dp"
+	android:textSize="18sp"
+	android:text="Descripción" />
+	
+	<EditText
+	    android:id="@+id/productDescription"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textView_enter_password"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:layout_marginTop="5dp"
+	    android:ems="10"
+	    android:inputType="textMultiLine"
+	    android:textSize="17sp" >
+	
+	</EditText>
+	
+	<TextView
+	android:id="@+id/textView_enter_rpassword"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_below="@+id/productDescription"
+	android:layout_marginLeft="20dp"
+	android:layout_marginTop="15dp"
+	android:textSize="18sp"
+	android:text="Foto" />
+	
+	<EditText
+	    android:id="@+id/productPick"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textView_enter_rpassword"
+	    android:layout_marginLeft="15dp"
+	    android:layout_marginRight="15dp"
+	    android:layout_marginTop="5dp"
+	    android:ems="10"
+	    android:inputType="textPassword"
+	    android:textSize="17sp" >
+	
+	</EditText>
+	
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/productPick"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="20dp" >
+	
+	    <Button
+	        android:id="@+id/btnAddProduct"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="40dp"
+	        android:text="Agregar Producto" />
+	
+	    <Button
+	        android:id="@+id/btnCancel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="40dp"
+	        android:text="Cancelar" />
+	</LinearLayout>
+</RelativeLayout>
