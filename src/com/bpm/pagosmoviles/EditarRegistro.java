@@ -1,7 +1,6 @@
 package com.bpm.pagosmoviles;
 
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;

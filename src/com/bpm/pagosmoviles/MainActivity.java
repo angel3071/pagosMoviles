@@ -34,18 +34,14 @@ public class MainActivity extends FragmentActivity {
         adapter.addFragment(FragmentPrueba.newInstance(android.graphics.Color.CYAN, 3));
         adapter.addFragment(FragmentPrueba.newInstance(android.graphics.Color.RED, 4));
         this.pager.setAdapter(adapter);
- 
     }
  
     @Override
     public void onBackPressed() {
- 
         // Return to previous page when we press back button
         if (this.pager.getCurrentItem() == 0)
             super.onBackPressed();
         else
             this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
- 
     }
- 
 }

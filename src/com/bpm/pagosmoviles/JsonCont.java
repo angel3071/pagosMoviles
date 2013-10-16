@@ -39,8 +39,7 @@ public class JsonCont {
 	            }
 	        } catch (Exception e) {
 	            Log.d("ReadJSONFeed", e.getLocalizedMessage());
-	        }        
-	        
+	        }
 	        return stringBuilder.toString();
 	    }                                                    
 }

@@ -1,17 +1,6 @@
 package com.bpm.pagosmoviles;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -89,16 +78,10 @@ public class RegistrarCliente extends Activity {
 			@Override
 			public void onClick(View v) {				
 				nombres = eliminaEspacios(nombresView.getText().toString());
-				apellidpP = apellidpPView.getText().toString();
-				apellidpM = apellidpMView.getText().toString();
+				apellidpP = eliminaEspacios(apellidpPView.getText().toString());
+				apellidpM = eliminaEspacios(apellidpMView.getText().toString());
 				email = emailView.getText().toString();
 				direccion = eliminaEspacios(direccionView.getText().toString());
-				
-				Log.w("nombres", nombres);
-				Log.w("apellido p", apellidpP);
-				Log.w("apellido m", apellidpM);
-				Log.w("email", email);
-				Log.w("direccion", direccion);
 				
 				String phones = "";
 				
@@ -106,14 +89,14 @@ public class RegistrarCliente extends Activity {
 					phones = phones + "telefono" + String.valueOf(i+1) + "=" + RegistrarCliente.this.telefonos.get(i).getText().toString() + "&";
 				}
 				
-				String url = "http://bpmcart.com/bpmpayment/php/modelo/addCliente.php?names=" + nombres +
-						     "&apellodop=" + apellidpP + "&apellidom=" + apellidpM + "&emailCliente=" + email +
+				String url = "http://bpmcart.com/bpmpayment/php/modelo/addClient.php?names=" + nombres +
+						     "&apellidop=" + apellidpP + "&apellidom=" + apellidpM + "&emailCliente=" + email +
 						     "&direccion=" + direccion + "&numTelefonos=" + String.valueOf(telefonos.size()) + 
 						     "&" + phones + "emailUser=" + usuario;
 				
 				RegistrarCliente.this.pd = ProgressDialog.show(RegistrarCliente.this, "Procesando...", "Registrando datos...", true, false);
 				mAuthTask = new UserLoginTask();
-				mAuthTask.execute(url);
+     			mAuthTask.execute(url);
 			}
         });
 	}
@@ -136,20 +119,20 @@ public class RegistrarCliente extends Activity {
 		protected void onPostExecute(String result) {
 			mAuthTask = null;
             	try{
-	                if(!result.equals("false")) {	                	
+	                if(!result.equals("false") || !result.equals("Argumentos invalidos")) {	                	
 	                	if (RegistrarCliente.this.pd != null) {
 	                		RegistrarCliente.this.pd.dismiss();
 	                		
-	                		Intent i = new Intent(getApplicationContext(), Principal.class);
-			                i.putExtra("usuario", usuario);
-							startActivity(i);
-							finish();
+	                		Toast.makeText(getBaseContext(), "Cliente Agregado", Toast.LENGTH_SHORT).show();
+	                		
+	                		Intent returnIntent = new Intent();
+	                		returnIntent.putExtra("result", usuario);
+	                		setResult(RESULT_OK,returnIntent);     
+	                		finish();
 		   	            }
-	                	
-	                	Toast.makeText(getBaseContext(), "Cliente Agregado", Toast.LENGTH_SHORT).show();
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inválidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Hubo algún error",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (Exception e) {
 	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());

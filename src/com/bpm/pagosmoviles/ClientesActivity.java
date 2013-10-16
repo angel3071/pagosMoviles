@@ -1,9 +1,6 @@
 package com.bpm.pagosmoviles;
 
-
-
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,9 +23,6 @@ public class ClientesActivity extends Activity {
 		clientes.add(new Cliente("Federico",R.drawable.johnlennon200));
 		clientes.add(new Cliente("Angel",R.drawable.ritchie200));
 		clientes.add(new Cliente("Claudia",R.drawable.halle200));
-
-		
-		
 		
 		GridView gv = (GridView) findViewById(R.id.grid_view_clientes);
 		gv.setAdapter(new MyAdapter(this,clientes));
@@ -41,9 +35,7 @@ public class ClientesActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.clientes, menu);
 		return true;
 	}
-
 }

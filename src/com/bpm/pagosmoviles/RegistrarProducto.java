@@ -68,13 +68,11 @@ public class RegistrarProducto extends Activity{
 	                if(!result.equals("false")) {	                	
 	                	if (RegistrarProducto.this.pd != null) {
 	                		RegistrarProducto.this.pd.dismiss();
-	                		
-	                		Intent i = new Intent(getApplicationContext(), Principal.class);
-			                i.putExtra("usuario", usuario);
-							startActivity(i);
-							finish();
+	                		Intent returnIntent = new Intent();
+	                		returnIntent.putExtra("result", usuario);
+	                		setResult(RESULT_OK,returnIntent);     
+	                		finish();
 		   	            }
-	                	
 	                	Toast.makeText(getBaseContext(), "Producto Agregado", Toast.LENGTH_SHORT).show();
 	                }
 	                else {

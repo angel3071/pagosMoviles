@@ -95,9 +95,9 @@ public class ProductosFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	    case R.id.add_producto:            
-            Intent i = new Intent(getActivity().getBaseContext(), RegistrarProducto.class);
+	    	Intent i = new Intent(getActivity().getBaseContext(), RegistrarProducto.class);
             i.putExtra("usuario", usuario);
-			startActivity(i);
+            startActivityForResult(i, 1);
             return true;
 	    default:
 	        break;

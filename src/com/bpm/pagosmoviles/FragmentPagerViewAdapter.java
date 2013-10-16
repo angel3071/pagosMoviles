@@ -2,18 +2,15 @@ package com.bpm.pagosmoviles;
 
 import java.util.ArrayList;
 import java.util.List;
- 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
- 
 
 public class FragmentPagerViewAdapter extends FragmentPagerAdapter {
  
     public FragmentPagerViewAdapter(FragmentManager fm) {
 		super(fm);
         this.fragments = new ArrayList<Fragment>();
-
 	}
 
 	// List of fragments which are going to set in the view pager widget
@@ -32,5 +29,4 @@ public class FragmentPagerViewAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return this.fragments.size();
     }
- 
 }

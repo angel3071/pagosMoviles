@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -103,12 +102,11 @@ public class ClientesFragment extends Fragment {
 	    case R.id.add_cliente:            
             Intent i = new Intent(getActivity().getBaseContext(), RegistrarCliente.class);
             i.putExtra("usuario", usuario);
-			startActivity(i);
+            startActivityForResult(i, 1);
             return true;
 	    default:
 	        break;
 	    }
-
 	    return false;
 	}
 }

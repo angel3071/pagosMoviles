@@ -47,8 +47,6 @@ public class LoginActivity extends Activity {
 		storedMail = storedPreferences.getString("mail", "");
 		storedPass = storedPreferences.getString("pass", "");
 		
-			
-		
 		if(!storedMail.equals("") && !storedPass.equals("")){
 			pass = storedPass;
 			email = storedMail;
@@ -59,7 +57,6 @@ public class LoginActivity extends Activity {
 		
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.email);
-
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override

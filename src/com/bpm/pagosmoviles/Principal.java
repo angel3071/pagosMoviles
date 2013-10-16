@@ -23,6 +23,7 @@ public class Principal extends FragmentActivity  {
 	int corrida = 0;
 	UserLoginTask mAuthTaskClientes = null;
 	UserLoginTask mAuthTaskProductos = null;
+	private String usuario;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -30,10 +31,9 @@ public class Principal extends FragmentActivity  {
 		this.setContentView(R.layout.activity_principal);
 		
 		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando información...", true, false);
-
-		this.pager = (ViewPager) this.findViewById(R.id.pager);
 		Intent intent = getIntent();
-		String usuario = intent.getStringExtra("usuario");
+		usuario = intent.getStringExtra("usuario");
+		this.pager = (ViewPager) this.findViewById(R.id.pager);
 		corrida = 1;
 		mAuthTaskClientes = new UserLoginTask();
 		mAuthTaskClientes.execute("http://bpmcart.com/bpmpayment/php/modelo/getCPF.php?email="+ usuario + "&obtener=clientes");
@@ -47,6 +47,21 @@ public class Principal extends FragmentActivity  {
 			super.onBackPressed();
 		else
 			this.pager.setCurrentItem(this.pager.getCurrentItem() - 1);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK) {
+			usuario=data.getStringExtra("result");
+			String temp = usuario;
+			
+			Intent refresh = new Intent(this, Principal.class);
+			finish();
+			refresh.putExtra("usuario", temp);
+	        startActivity(refresh);
+		}
+		
+		if (resultCode == RESULT_CANCELED) {}
 	}
 	
 	public class UserLoginTask extends AsyncTask<String, Void, String>{

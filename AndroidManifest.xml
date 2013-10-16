@@ -28,7 +28,10 @@
             android:name="com.bpm.pagosmoviles.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateHidden" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         
         <activity
@@ -53,10 +56,6 @@
             android:name="com.bpm.pagosmoviles.RegistrarCliente"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_registro_cliente" >
-                        <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 </manifest>
