@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -42,7 +44,7 @@ public class RegistrarCliente extends Activity {
         telefonos.add(telefonoView);
         
         
-        Button addPhone = (Button) findViewById(R.id.btnAddPhone);
+        ImageButton addPhone = (ImageButton) findViewById(R.id.imageAddCliente);
         addPhone.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -50,23 +52,24 @@ public class RegistrarCliente extends Activity {
 				LinearLayout A = new LinearLayout(RegistrarCliente.this);
 				A.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 			    A.setOrientation(LinearLayout.HORIZONTAL);
+			    A.setGravity(Gravity.CENTER | Gravity.BOTTOM);
 			    
 			    EditText tv = new EditText(RegistrarCliente.this);
 				tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				tv.setEms(10);
 				
-				Button b = new Button(RegistrarCliente.this);
-				b.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				b.setText("X");
-				b.setOnClickListener(new View.OnClickListener() {
+				ImageButton ib = new ImageButton(RegistrarCliente.this);
+				ib.setImageResource(R.drawable.delete16);
+				ib.setOnClickListener(new View.OnClickListener() {
+					
 					@Override
 					public void onClick(View v) {
-						ll1.removeView((View) v.getParent());						
+						ll1.removeView((View) v.getParent());
 					}
 				});
 				
 			    A.addView(tv);
-			    A.addView(b);
+			    A.addView(ib);
 				
 				ll1.addView(A,ll1.getChildCount()-2);
 				telefonos.add(tv);

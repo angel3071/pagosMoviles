@@ -38,7 +38,7 @@ public class RegistrarProducto extends Activity{
 				descripcion = eliminaEspacios(descripcionView.getText().toString());
 				
 				String url = "http://bpmcart.com/bpmpayment/php/modelo/addProduct.php?name=" + nombre +
-						     "&price=" + precio + "&desc=" + descripcion + "&email=q@q";
+						     "&price=" + precio + "&desc=" + descripcion + "&email=" + usuario;
 				
 				RegistrarProducto.this.pd = ProgressDialog.show(RegistrarProducto.this, "Procesando...", "Registrando datos...", true, false);
 				mAuthTask = new UserLoginTask();
