@@ -20,9 +20,11 @@ public class Principal extends FragmentActivity  {
 	MyFragmentPagerAdapter pagerAdapter;
 	JSONObject jObjectClientes = null;
 	JSONObject jObjectProductos = null;
+	JSONObject jObjectFacturas = null;
 	int corrida = 0;
 	UserLoginTask mAuthTaskClientes = null;
 	UserLoginTask mAuthTaskProductos = null;
+	UserLoginTask mAuthTaskFacturas = null;
 	private String usuario;
 
 	@Override
@@ -30,15 +32,18 @@ public class Principal extends FragmentActivity  {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_principal);
 		
-		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando informaciÛn...", true, false);
+		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando informaci√≥n...", true, false);
 		Intent intent = getIntent();
 		usuario = intent.getStringExtra("usuario");
 		this.pager = (ViewPager) this.findViewById(R.id.pager);
 		corrida = 1;
 		mAuthTaskClientes = new UserLoginTask();
 		mAuthTaskClientes.execute("http://bpmcart.com/bpmpayment/php/modelo/getCPF.php?email="+ usuario + "&obtener=clientes");
+		mAuthTaskFacturas = new UserLoginTask();
+		mAuthTaskFacturas.execute("http://bpmcart.com/bpmpayment/php/modelo/getCPF.php?email="+ usuario + "&obtener=facturas");
 		mAuthTaskProductos = new UserLoginTask();
 		mAuthTaskProductos.execute("http://bpmcart.com/bpmpayment/php/modelo/getCPF.php?email="+ usuario + "&obtener=productos");
+		
 	}
 
 	@Override
@@ -84,10 +89,18 @@ public class Principal extends FragmentActivity  {
 	                	}
 	                	
 	                	else if(corrida == 2) {
+	                		corrida = 3;
+	                		jObjectFacturas = new JSONObject(result);
+	                		
+		            		
+	                	}
+	                	else if(corrida == 3){
 	                		jObjectProductos = new JSONObject(result);
+	                		
 	                		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-		            		adapter.addFragment(ClientesFragment.newInstance(Color.BLACK, 1, jObjectClientes));
-		            		adapter.addFragment(ProductosFragment.newInstance(Color.BLACK, 2, jObjectProductos));
+		            		adapter.addFragment(ClientesFragment.newInstance(Color.WHITE, 1, jObjectClientes));
+		            		adapter.addFragment(FacturasFragment.newInstance(Color.WHITE, 2, jObjectFacturas));
+		            		adapter.addFragment(ProductosFragment.newInstance(Color.WHITE, 3, jObjectProductos));
 		            		pager.setAdapter(adapter);
 		            		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		            		titleIndicator.setBackgroundColor(Color.BLACK);
@@ -96,10 +109,11 @@ public class Principal extends FragmentActivity  {
 		            		if (Principal.this.pd != null) {
 		            			Principal.this.pd.dismiss();
 			   	            }
+
 	                	}
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inv·lidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Credenciales inv√°lidas",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (JSONException e) {
 	                Log.d("ReadJSONFeedTask", "BLAAA");

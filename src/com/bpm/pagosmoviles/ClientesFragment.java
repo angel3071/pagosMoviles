@@ -25,6 +25,7 @@ public class ClientesFragment extends Fragment {
 	static JSONArray clients;
 	private static final String BACKGROUND_COLOR = "color";
 	private static final String INDEX = "index";
+	private static boolean cargado = false;
 	private String usuario;
 
 	//private int color, index;
@@ -62,16 +63,18 @@ public class ClientesFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_clientes, container, false);
-		
+    	ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_clientes, container, false);
+
+		if(clientes.size() != 0)
+			clientes.clear();
 			try {
 		    	int n = clients.length();
 		    	for(int i = 0 ; i < n ; i++) {
 		    		JSONObject person = clients.getJSONObject(i);		    	    
 		    	    clientes.add(new Cliente(person.getString("nombre"),R.drawable.michael200));
+		    	    ClientesFragment.cargado = true;
 		    	}
-		    	
-		    	GridView gv = (GridView) rootView.findViewById(R.id.grid_view_clientes);
+				GridView gv = (GridView) rootView.findViewById(R.id.grid_view_clientes);
 				gv.setAdapter(new MyAdapter(getActivity(),clientes));
 				gv.setOnItemClickListener(new OnItemClickListener() {
 					@Override
@@ -79,6 +82,8 @@ public class ClientesFragment extends Fragment {
 		            	Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_LONG).show();		            	
 		            }
 		        });
+		    	
+		    	
 			} catch(Exception e) {
 				Log.w("ERROR", e.getMessage());
 			}

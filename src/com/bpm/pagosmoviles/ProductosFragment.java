@@ -59,6 +59,8 @@ public class ProductosFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		ViewGroup rootViewProd = (ViewGroup) inflater.inflate(R.layout.fragment_productos, container, false);
 
+		if(productos.size()!=0)
+			productos.clear();
 			try {
 		    	int n = articles.length();
 		    	for(int i = 0 ; i < n ; i++) {
@@ -75,7 +77,7 @@ public class ProductosFragment extends Fragment {
 		            }
 		        });
 			} catch(Exception e) {
-				Log.w("ERROR", "Algo pasó");
+				Log.w("ERROR", "Algo pasÃ³");
 			}
 		return rootViewProd;
 	}

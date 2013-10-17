@@ -214,7 +214,7 @@ public class LoginActivity extends Activity {
 						finish();
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inv·lidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Credenciales inv√°lidas",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (Exception e) {
 	                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());

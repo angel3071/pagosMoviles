@@ -37,7 +37,8 @@
         <activity
             android:name="com.bpm.pagosmoviles.Principal"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_principal" >            
+            android:label="@string/title_activity_principal" 
+            android:theme="@android:style/Theme.Black.NoTitleBar">            
         </activity>
         
         <activity
