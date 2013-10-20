@@ -87,18 +87,15 @@ public class Principal extends FragmentActivity  {
 	                		corrida = 2;
 	                		jObjectClientes  = new JSONObject(result);
 	                	}
-	                	
 	                	else if(corrida == 2) {
 	                		corrida = 3;
-	                		jObjectFacturas = new JSONObject(result);
-	                		
-		            		
+	                		jObjectFacturas = new JSONObject(result);		            		
 	                	}
 	                	else if(corrida == 3){
 	                		jObjectProductos = new JSONObject(result);
 	                		
 	                		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-		            		adapter.addFragment(ClientesFragment.newInstance(Color.WHITE, 1, jObjectClientes));
+		            		adapter.addFragment(ClientesFragment.newInstance(Color.BLACK, 1, jObjectClientes));
 		            		adapter.addFragment(FacturasFragment.newInstance(Color.WHITE, 2, jObjectFacturas));
 		            		adapter.addFragment(ProductosFragment.newInstance(Color.WHITE, 3, jObjectProductos));
 		            		pager.setAdapter(adapter);
@@ -113,7 +110,7 @@ public class Principal extends FragmentActivity  {
 	                	}
 	                }
 	                else {
-	                	Toast.makeText(getBaseContext(), "Credenciales inv√°lidas",Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getBaseContext(), "Credenciales inv·lidas",Toast.LENGTH_LONG).show();
 	                }
 	            } catch (JSONException e) {
 	                Log.d("ReadJSONFeedTask", "BLAAA");

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,6 +30,8 @@ public class ProductosFragment extends Fragment {
 	private static final String BACKGROUND_COLOR = "color";
 	private static final String INDEX = "index";
 	private String usuario;
+	UserLoginTask mAuthTask = null;
+	public ProgressDialog pd = null;
 
 	//private int color, index;
 
@@ -65,7 +71,7 @@ public class ProductosFragment extends Fragment {
 		    	int n = articles.length();
 		    	for(int i = 0 ; i < n ; i++) {
 		    		JSONObject article = articles.getJSONObject(i);
-		    		productos.add(new Producto(article.getString("nombre"),R.drawable.smartphone));
+		    		productos.add(new Producto(article.getString("nombre"), article.getString("id_pruducto"),R.drawable.smartphone));
 		    	}
 		    	
 		    	GridView gv = (GridView) rootViewProd.findViewById(R.id.grid_view_productos);
@@ -73,7 +79,24 @@ public class ProductosFragment extends Fragment {
 				gv.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 		            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		            	Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_LONG).show();
+						final int productID = position;
+						
+					   	   AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						   builder.setTitle(productos.get(position).getNombre());
+						   builder.setItems(R.array.opciones_productos, new DialogInterface.OnClickListener() {
+							   public void onClick(DialogInterface dialog, int item) {
+								   if (item == 0) {
+									   Toast.makeText(getActivity().getBaseContext(), "Editar producto", Toast.LENGTH_SHORT).show();
+								   }
+								   else if(item == 1) {
+									   ProductosFragment.this.pd= ProgressDialog.show(getActivity(), "Procesando...", "Eliminando producto...", true, false);
+									   mAuthTask = new UserLoginTask();
+									   mAuthTask.execute("http://bpmcart.com/bpmpayment/php/modelo/deleteProducto.php?idProducto="+ productos.get(productID).getIdProducto());
+								   }
+							    }
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
 		            }
 		        });
 			} catch(Exception e) {
@@ -106,5 +129,44 @@ public class ProductosFragment extends Fragment {
 	    }
 
 	    return false;
+	}
+	
+	public class UserLoginTask extends AsyncTask<String, Void, String>{
+		@Override
+		protected String doInBackground(String... urls) {
+			try {
+				return new JsonCont().readJSONFeed(urls[0]);
+			} catch (Exception e) {
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			mAuthTask = null;
+        	try{
+                if(!result.equals("false") || !result.equals("Argumentos invalidos")) {	                	
+                	if (ProductosFragment.this.pd != null) {
+                		ProductosFragment.this.pd.dismiss();
+                		String temp = usuario;
+                		Intent returnIntent = new Intent(getActivity(), Principal.class);
+                		returnIntent.putExtra("usuario", temp);
+                		getActivity().setResult(android.app.Activity.RESULT_OK,returnIntent);
+                		startActivity(returnIntent);
+                		getActivity().finish();
+	   	            }
+                }
+                else {
+                	Toast.makeText(getActivity().getBaseContext(), "Hubo algún error",Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Log.d("ReadJSONFeedTask", e.getLocalizedMessage());
+                Toast.makeText(getActivity().getBaseContext(), "Imposible conectarse a la red",Toast.LENGTH_LONG).show();
+            }       
+		}
+		
+		@Override
+		protected void onProgressUpdate(Void... values) {	
+		}
 	}
 }

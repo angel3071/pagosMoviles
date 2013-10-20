@@ -1,12 +1,18 @@
 package com.bpm.pagosmoviles;
 
 public class Producto extends ElementoGrid {
+	private String idPrducto;
 
-	public Producto(String nombre, int pic) {
+	public Producto(String nombre, String idPrducto, int pic) {
 		super(nombre, pic);
-		// TODO Auto-generated constructor stub
+		this.idPrducto = idPrducto;
 	}
 
+	public String getNombre() {
+		return super.nombre;
+	}
 	
-	
+	public String getIdProducto() {
+		return this.idPrducto;
+	}
 }
