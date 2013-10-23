@@ -32,7 +32,7 @@ public class Principal extends FragmentActivity  {
 		super.onCreate(arg0);
 		this.setContentView(R.layout.activity_principal);
 		
-		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando informaciÃ³n...", true, false);
+		this.pd = ProgressDialog.show(this, "Procesando...", "Descargando información...", true, false);
 		Intent intent = getIntent();
 		usuario = intent.getStringExtra("usuario");
 		this.pager = (ViewPager) this.findViewById(R.id.pager);

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bpm.pagosmoviles"
     android:versionCode="1"
-     android:installLocation="preferExternal"
+    android:installLocation="auto"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -62,6 +62,18 @@
             android:name="com.bpm.pagosmoviles.RegistrarCliente"
             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_registro_cliente" >
+        </activity>
+        
+        <activity
+            android:name="com.bpm.pagosmoviles.EditarCliente"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_editar_cliente" >
+        </activity>
+        
+        <activity
+            android:name="com.bpm.pagosmoviles.EditarProducto"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_editar_producto" >
         </activity>
     </application>
 </manifest>

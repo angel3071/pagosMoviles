@@ -91,8 +91,11 @@ public class ClientesFragment extends Fragment {
 								   if (item == 0) {
 									   Toast.makeText(getActivity().getBaseContext(), "Hacer factura", Toast.LENGTH_SHORT).show();
 								   }
-								   else if(item == 1) {
-									   Toast.makeText(getActivity().getBaseContext(), clientes.get(user).getCorreo() , Toast.LENGTH_SHORT).show();
+								   else if(item == 1) {									   
+									   Intent i = new Intent(getActivity().getBaseContext(), EditarCliente.class);
+							           i.putExtra("cliente", clientes.get(user).getCorreo());
+							           i.putExtra("usuario", usuario);
+							           startActivityForResult(i, 1);
 								   }
 								   else if(item == 2) {
 									   ClientesFragment.this.pd= ProgressDialog.show(getActivity(), "Procesando...", "Eliminando cliente...", true, false);

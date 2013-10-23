@@ -21,13 +21,14 @@
 
         <EditText
             android:id="@+id/clienteNombres"
-            android:ems="10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-		    android:textSize="18sp"
-            android:inputType="textPersonName" >
+            android:ems="10"
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:textSize="18sp" >
+
             <requestFocus />
         </EditText>
 
@@ -147,12 +148,12 @@
 	        android:orientation="horizontal" >
 	
 	        <Button
-	            android:id="@+id/btnAddCliente"
+	            android:id="@+id/btnUpdateClient"
 	            style="?android:attr/buttonStyleSmall"
 	            android:layout_width="145dp"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_horizontal|center"
-	            android:text="Agregar Cliente" />
+	            android:text="Actualizar Cliente" />
 	
 	        <Button
 	            android:id="@+id/btnCancelar"

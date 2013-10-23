@@ -86,7 +86,10 @@ public class ProductosFragment extends Fragment {
 						   builder.setItems(R.array.opciones_productos, new DialogInterface.OnClickListener() {
 							   public void onClick(DialogInterface dialog, int item) {
 								   if (item == 0) {
-									   Toast.makeText(getActivity().getBaseContext(), "Editar producto", Toast.LENGTH_SHORT).show();
+									   Intent i = new Intent(getActivity().getBaseContext(), EditarProducto.class);
+							           i.putExtra("idProducto", productos.get(productID).getIdProducto());
+							           i.putExtra("usuario", usuario);
+							           startActivityForResult(i, 1);
 								   }
 								   else if(item == 1) {
 									   ProductosFragment.this.pd= ProgressDialog.show(getActivity(), "Procesando...", "Eliminando producto...", true, false);

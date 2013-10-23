@@ -29,7 +29,7 @@ public class RegistrarProducto extends Activity{
         precioView = (EditText) findViewById(R.id.productPrice);
         descripcionView = (EditText) findViewById(R.id.productDescription);
         
-        Button addProducto = (Button)findViewById(R.id.btnAddProduct);
+        Button addProducto = (Button)findViewById(R.id.btnAgregaProduct);
         addProducto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {				

@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -134,8 +135,16 @@ public class LoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText("Por favor espere");
+			esconderTeclado();
 			showProgress(true);
+			
 		}
+	}
+	
+	private void esconderTeclado() {
+		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+		inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),      
+		InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)

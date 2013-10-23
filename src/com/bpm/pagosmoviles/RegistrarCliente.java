@@ -3,13 +3,16 @@ package com.bpm.pagosmoviles;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,10 +22,9 @@ import android.widget.Toast;
 public class RegistrarCliente extends Activity {
 	private UserLoginTask mAuthTask = null;
 	private ProgressDialog pd = null;
-	private EditText nombresView, apellidpPView, apellidpMView, emailView, direccionView, telefonoView;
+	private EditText nombresView, apellidpPView, apellidpMView, emailView, direccionView;
 	private String nombres, apellidpP, apellidpM, direccion, email, usuario;
-	private LinearLayout ll1;
-	private ArrayList<EditText> telefonos;
+	private LinearLayout layoutTelefonos;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,7 @@ public class RegistrarCliente extends Activity {
         apellidpMView = (EditText) findViewById(R.id.clienteApellidoM);
         emailView = (EditText) findViewById(R.id.clienteEmail);
         direccionView = (EditText) findViewById(R.id.clienteDireccion);
-        ll1 = (LinearLayout) findViewById(R.id.linearLayout1);
-        telefonoView = (EditText) findViewById(R.id.clienteTelefono);
-        
-        telefonos = new ArrayList<EditText>();
-        telefonos.add(telefonoView);
-        
+        layoutTelefonos = (LinearLayout)findViewById(R.id.layoutTelefonos);
         
         ImageButton addPhone = (ImageButton) findViewById(R.id.imageAddCliente);
         addPhone.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +54,7 @@ public class RegistrarCliente extends Activity {
 			    EditText tv = new EditText(RegistrarCliente.this);
 				tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				tv.setEms(10);
+				tv.setInputType(InputType.TYPE_CLASS_NUMBER);
 				
 				ImageButton ib = new ImageButton(RegistrarCliente.this);
 				ib.setImageResource(R.drawable.delete16);
@@ -64,15 +62,14 @@ public class RegistrarCliente extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						ll1.removeView((View) v.getParent());
+						layoutTelefonos.removeView((View) v.getParent());
 					}
 				});
 				
 			    A.addView(tv);
 			    A.addView(ib);
 				
-				ll1.addView(A,ll1.getChildCount()-2);
-				telefonos.add(tv);
+			    layoutTelefonos.addView(A,layoutTelefonos.getChildCount());
 			}
 		});
         
@@ -86,20 +83,48 @@ public class RegistrarCliente extends Activity {
 				email = emailView.getText().toString();
 				direccion = eliminaEspacios(direccionView.getText().toString());
 				
-				String phones = "";
+				ArrayList<String> tels = new ArrayList<String>();
 				
-				for(int i = 0 ; i < RegistrarCliente.this.telefonos.size() ; i++) {
-					phones = phones + "telefono" + String.valueOf(i+1) + "=" + RegistrarCliente.this.telefonos.get(i).getText().toString() + "&";
+				int childcount = layoutTelefonos.getChildCount();
+				for (int i=1; i < childcount; i++){
+				      LinearLayout tempView = (LinearLayout)layoutTelefonos.getChildAt(i);
+				      int hijos = tempView.getChildCount();
+				      
+				      for(int j = 0 ;j < hijos ; j++) {
+				    	  if( tempView.getChildAt(j) instanceof EditText ) {
+				    		  if(!((EditText)tempView.getChildAt(j)).getText().toString().equals("")) {
+				    			  String telefono =  ((EditText)tempView.getChildAt(j)).getText().toString();
+					    		  tels.add(telefono);
+				    		  }
+				    	  }
+				      }
 				}
 				
+				String phones = "";
+				for(int i = 0 ; i < tels.size() ; i++) {
+					phones = phones + "telefono" + String.valueOf(i+1) + "=" + tels.get(i) + "&";
+				}
+								
 				String url = "http://bpmcart.com/bpmpayment/php/modelo/addClient.php?names=" + nombres +
 						     "&apellidop=" + apellidpP + "&apellidom=" + apellidpM + "&emailCliente=" + email +
-						     "&direccion=" + direccion + "&numTelefonos=" + String.valueOf(telefonos.size()) + 
+						     "&direccion=" + direccion + "&numTelefonos=" + String.valueOf(tels.size()) + 
 						     "&" + phones + "emailUser=" + usuario;
-				
+								
+				esconderTeclado();
 				RegistrarCliente.this.pd = ProgressDialog.show(RegistrarCliente.this, "Procesando...", "Registrando datos...", true, false);
 				mAuthTask = new UserLoginTask();
      			mAuthTask.execute(url);
+			}
+        });
+        
+        Button calcel = (Button)findViewById(R.id.btnCancelar);
+        calcel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			    Intent returnIntent = new Intent();
+        		returnIntent.putExtra("result", usuario);
+        		setResult(RESULT_CANCELED,returnIntent);     
+        		finish();
 			}
         });
 	}
@@ -107,6 +132,12 @@ public class RegistrarCliente extends Activity {
 	private String eliminaEspacios(String palabras) {
     	return palabras.replaceAll("\\s", "~");
     }
+	
+	private void esconderTeclado() {
+		InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+		inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),      
+		InputMethodManager.HIDE_NOT_ALWAYS);
+	}
 	
 	public class UserLoginTask extends AsyncTask<String, Void, String>{
 		@Override

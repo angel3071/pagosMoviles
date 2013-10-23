@@ -11,6 +11,8 @@
     <string name="title_activity_clientes">Clientes</string>
     <string name="title_activity_registro_producto">Agregar Producto</string>
     <string name="title_activity_registro_cliente">Agregar Cliente</string>
+    <string name="title_activity_editar_cliente">Editar Cliente</string>
+    <string name="title_activity_editar_producto">Editar Cliente</string>
     <string-array
         name="opciones_clientes">
         <item>Hacer factura</item>
